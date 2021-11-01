@@ -19,6 +19,19 @@ source ./devel/setup.bash
 catkin_make
 ```
 
+### Step 2. Make sure that a roscore is up and running
+```bash
+roscore
+```
+### Step 3. In new terminal run publisher node 
+```bash
+rosrun beginner_tutorials talker
+```
+### Step 4.  In new terminal run subscriber node 
+```bash
+rosrun beginner_tutorials listener
+```
+
 
 ## Licensing
 The project is licensed under [MIT License](https://opensource.org/licenses/MIT). Click [here](https://github.com/kavyadevd/beginner_tutorials/blob/main/LICENSE) to know more
