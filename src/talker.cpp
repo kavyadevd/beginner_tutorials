@@ -41,6 +41,12 @@
  */
 bool ServiceFile(beginner_tutorials::ServiceFile::Request &request_, beginner_tutorials::ServiceFile::Response &response_) {
   ROS_INFO_STREAM("Modifying message");
+  if (request_.output_msg.empty()) {
+    ROS_ERROR_STREAM("Received empty string message.");
+    return false;
+  } else {
+    return true;
+  }
 }
 
 
