@@ -10,8 +10,8 @@
  * The above copyright notice and this permission notice shall be included in
  *all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  *AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
@@ -39,7 +39,7 @@
  * @param response_ : reference to response object from service
  * @return bool flag indicating success or failure of function execution
  */
-bool ServiceFile(beginner_tutorials::ServiceFile::Request &request_, beginner_tutorials::ServiceFile::Response &response_) {
+bool SetMessage(beginner_tutorials::ServiceFile::Request &request_, beginner_tutorials::ServiceFile::Response &response_) {
   ROS_INFO_STREAM("Modifying message");
   if (request_.output_msg.empty()) {
     ROS_ERROR_STREAM("Received empty string message.");
@@ -76,6 +76,8 @@ int main(int argc, char **argv) {
    */
   ros::NodeHandle n;
 
+  // Create service and advertised over ROS
+  ros::ServiceServer service = n.advertiseService("ServiceFile", &SetMessage);
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -95,7 +97,6 @@ int main(int argc, char **argv) {
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::Rate loop_rate(10);
-
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
