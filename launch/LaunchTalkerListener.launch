@@ -1,2 +1,3 @@
 <launch>
+    <arg name="frequency" default="10" doc="frequency argument"/>
 </launch>
