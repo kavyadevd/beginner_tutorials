@@ -24,4 +24,9 @@
  # @brief File to describes service. It is composed of two parts: a request and a response
  #/
 
- 
+# request
+string input_msg
+
+---
+# response 
+string output_msg 
