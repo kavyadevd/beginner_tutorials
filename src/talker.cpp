@@ -45,6 +45,10 @@ bool ServiceFile(beginner_tutorials::ServiceFile::Request &request_, beginner_tu
     ROS_ERROR_STREAM("Received empty string message.");
     return false;
   } else {
+    ROS_DEBUG_STREAM("Received message: " << request_.output_msg);
+    ROS_WARN_STREAM("Publisher message will be changed.");
+    response_.input_msg = request_.output_msg;
+    ROS_DEBUG_STREAM("Talker message changed.");
     return true;
   }
 }
