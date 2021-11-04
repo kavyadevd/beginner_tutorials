@@ -30,6 +30,20 @@
 
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+// Include service
+#include "beginner_tutorials/ServiceFile.h"
+
+/*
+ * @brief Modifies publisher string data
+ * @param request_ : reference to request object from service
+ * @param response_ : reference to response object from service
+ * @return bool flag indicating success or failure of function execution
+ */
+bool ServiceFile(beginner_tutorials::ServiceFile::Request &request_, beginner_tutorials::ServiceFile::Response &response_) {
+  ROS_INFO_STREAM("Modifying message");
+}
+
+
 
 int main(int argc, char **argv) {
   /**
@@ -76,7 +90,6 @@ int main(int argc, char **argv) {
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
-  int count = 0;
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -84,7 +97,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << " The counter is set to : " << count << ". \tFear the turtle";
+    ss << " The time is : " << ros::Time::now(); << ". \tFear the turtle";
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
@@ -99,7 +112,6 @@ int main(int argc, char **argv) {
 
     ros::spinOnce();
     loop_rate.sleep();
-    ++count;
   }
 
   return 0;
