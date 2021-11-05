@@ -1,0 +1,95 @@
+\href{https://opensource.org/licenses/MIT}{\tt } \section*{R\+OS Beginner Tutorials}
+
+A beginner R\+OS package that implements simple publisher-\/subscriber nodes in R\+OS
+
+\subsection*{Installations}
+
+To install R\+OS refer \href{http://wiki.ros.org/ROS/Installation}{\tt this link}.
+
+Preferred Ubuntu 18.\+04, R\+OS Melodic
+
+\#\#\# Step 1. Clone repository and build the package 
+\begin{DoxyCode}
+git clone --recursive https://github.com/kavyadevd/beginner\_tutorials.git
+cp <repository\_path> <catkin\_workspace\_path/src/>
+cd <catkin\_workspace>
+source ./devel/setup.bash
+catkin\_make
+\end{DoxyCode}
+
+
+\#\#\# Step 2. Make sure that a roscore is up and running 
+\begin{DoxyCode}
+roscore
+\end{DoxyCode}
+ \#\#\# Step 3. In new terminal run publisher node 
+\begin{DoxyCode}
+rosrun beginner\_tutorials talker
+\end{DoxyCode}
+ \#\#\# Step 4. In new terminal run subscriber node 
+\begin{DoxyCode}
+rosrun beginner\_tutorials listener
+\end{DoxyCode}
+
+
+\paragraph*{To run launch file}
+
+
+\begin{DoxyCode}
+roslaunch beginner\_tutorials LaunchTalkerListener.launch frequency:=<desired-frequency>
+\end{DoxyCode}
+ This command will launch published and subscriber.
+
+\#\#\#\# To run service 
+\begin{DoxyCode}
+rosservice call /ServiceFile "<desired-custom-message>"
+\end{DoxyCode}
+
+
+\#\#\#\# To invoke rqt logger and console on separate terminals run the following two commands 
+\begin{DoxyCode}
+rosrun rqt\_console rqt\_console
+rosrun rqt\_logger\_level rqt\_logger\_level
+\end{DoxyCode}
+
+
+\subsection*{Plugins}
+
+
+\begin{DoxyItemize}
+\item Cpp\+Check\+Eclipse
+
+To install and run cppcheck in Eclipse
+\begin{DoxyEnumerate}
+\item In Eclipse, go to Window -\/$>$ Preferences -\/$>$ C/\+C++ -\/$>$ cppcheclipse. Set cppcheck binary path to \char`\"{}/usr/bin/cppcheck\char`\"{}.
+\item To run C\+P\+P\+Check on a project, right-\/click on the project name in the Project Explorer and choose cppcheck -\/$>$ Run cppcheck.
+\item To run on terminal ```bash cppcheck --enable=all --std=c++11 -\/I include/ --suppress=missing\+Include\+System \$( find . -\/name $\ast$.cpp -\/or -\/name $\ast$.h $\vert$ grep -\/vE -\/e \char`\"{}$^\wedge$./build/\char`\"{} -\/e \char`\"{}$^\wedge$./vendor/\char`\"{}) $>$ Results/cppcheckoutput.\+xml ``` Results are present at Results/cppcheckoutput.\+xml
+\end{DoxyEnumerate}
+\item Cpplint
+\begin{DoxyEnumerate}
+\item To run cpplint on terminal 
+\begin{DoxyCode}
+cpplint $( find . -name *.cpp | grep -vE -e "^./build/" -e "^./vendor/") $( find . -name *.hpp | grep -vE
+       -e "^./build/" -e "^./vendor/") >                    Results/cpplintoutput.txt
+\end{DoxyCode}
+ Results are present at Results/cpplintoutput.\+xml
+\end{DoxyEnumerate}
+\item Google C++ Style
+
+To include and use Google C++ Style formatter in Eclipse
+\begin{DoxyEnumerate}
+\item In Eclipse, go to Window -\/$>$ Preferences -\/$>$ C/\+C++ -\/$>$ Code Style -\/$>$ Formatter. Import \href{https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-cpp-google-style.xml}{\tt eclipse-\/cpp-\/google-\/style} and apply.
+\item To use Google C++ style formatter, right-\/click on the source code or folder in Project Explorer and choose Source -\/$>$ Format
+\end{DoxyEnumerate}
+\item Doxygen
+
+The H\+T\+ML page for project outlines can be generated using the following commands
+\begin{DoxyEnumerate}
+\item doxygen -\/g
+\item doxygen Doxyfile
+\end{DoxyEnumerate}
+\end{DoxyItemize}
+
+\subsection*{Licensing}
+
+The project is licensed under \href{https://opensource.org/licenses/MIT}{\tt M\+IT License}. Click \href{https://github.com/kavyadevd/beginner_tutorials/blob/main/LICENSE}{\tt here} to know more 

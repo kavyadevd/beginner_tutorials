@@ -10,8 +10,8 @@
  * The above copyright notice and this permission notice shall be included in
  *all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  *AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  *LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
@@ -27,9 +27,35 @@
 
 // Include required headers
 #include <sstream>
-
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+// Include service
+#include "beginner_tutorials/ServiceFile.h"
+
+std::string publisher_message = "Fear the turtle";    // NOLINT
+/*
+ * @brief Modifies publisher string data
+ * @param request_ : reference to request object from service
+ * @param response_ : reference to response object from service
+ * @return bool flag indicating success or failure of function execution
+ */
+bool SetMessage(beginner_tutorials::ServiceFile::Request &request_,   // NOLINT
+beginner_tutorials::ServiceFile::Response &response_) {   // NOLINT
+  ROS_INFO_STREAM("Modifying message");
+  if (request_.input_msg.empty()) {
+    ROS_ERROR_STREAM("Received empty string message.");
+    return false;
+  } else {
+    ROS_DEBUG_STREAM("Received message: " << request_.input_msg);
+    ROS_WARN_STREAM("Publisher message will be changed.");
+    publisher_message = request_.input_msg;
+    response_.output_msg = request_.input_msg;
+    ROS_DEBUG_STREAM("Talker message changed.");
+    return true;
+  }
+}
+
+
 
 int main(int argc, char **argv) {
   /**
@@ -52,6 +78,8 @@ int main(int argc, char **argv) {
    */
   ros::NodeHandle n;
 
+  // Create service and advertised over ROS
+  ros::ServiceServer service = n.advertiseService("ServiceFile", &SetMessage);
   /**
    * The advertise() function is how you tell ROS that you want to
    * publish on a given topic name. This invokes a call to the ROS
@@ -70,13 +98,26 @@ int main(int argc, char **argv) {
    * buffer up before throwing some away.
    */
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
-  ros::Rate loop_rate(10);
-
+  double talk_frequency;
+  n.getParam("/frequency", talk_frequency);
+  ROS_DEBUG_STREAM("Frequency argument = " << talk_frequency);
+  if (isnan(talk_frequency) || talk_frequency < 1) {
+    ROS_FATAL_STREAM(
+      "Invalid frequency. Frequency must be a nonzero positive number");
+    ROS_DEBUG_STREAM("Invalid frequency detected. Changed to default value");
+    talk_frequency = 10.0;
+  } else if (talk_frequency > 51) {
+    ROS_WARN_STREAM("Recommended frequency range is 1-50");
+  } else if (talk_frequency > 100) {
+    ROS_ERROR_STREAM("Error! Frequency value too large.");
+    ROS_DEBUG_STREAM("Large frequency detected. Changed to max allowed value");
+    talk_frequency = 50;
+  }
+  ros::Rate loop_rate(talk_frequency);
   /**
    * A count of how many messages we have sent. This is used to create
    * a unique string for each message.
    */
-  int count = 0;
   while (ros::ok()) {
     /**
      * This is a message object. You stuff it with data, and then publish it.
@@ -84,7 +125,7 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 
     std::stringstream ss;
-    ss << " The counter is set to : " << count << ". \tFear the turtle";
+    ss << publisher_message;
     msg.data = ss.str();
 
     ROS_INFO("%s", msg.data.c_str());
@@ -99,7 +140,6 @@ int main(int argc, char **argv) {
 
     ros::spinOnce();
     loop_rate.sleep();
-    ++count;
   }
 
   return 0;
