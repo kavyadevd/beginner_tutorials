@@ -8,7 +8,8 @@ A beginner ROS package that implements simple publisher-subscriber nodes in ROS
 
 To install ROS refer [this link](http://wiki.ros.org/ROS/Installation).
 
-Preferred Ubuntu 18.04, ROS Melodic
+## Requirements / Assumptions
+Project requires and evironment with Ubuntu 18.04, ROS Melodic
 
 
 ### Step 1. Clone repository and build the package
