@@ -93,9 +93,10 @@ rosrun rqt_logger_level rqt_logger_level
 - Doxygen
 
     The HTML page for project outlines can be generated using the following commands
-
-    1.  doxygen -g
-    2.  doxygen Doxyfile
+    ```bash
+    doxygen -g
+    doxygen Doxyfile
+    ```
 
 
 ## Licensing
