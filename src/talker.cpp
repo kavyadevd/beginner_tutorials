@@ -27,20 +27,20 @@
 
 // Include required headers
 #include <sstream>
-#include <math.h>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 // Include service
 #include "beginner_tutorials/ServiceFile.h"
 
-const char* publisher_message = ros::Time::now() + "Fear the turtle";
+std::string publisher_message = "Fear the turtle";    // NOLINT
 /*
  * @brief Modifies publisher string data
  * @param request_ : reference to request object from service
  * @param response_ : reference to response object from service
  * @return bool flag indicating success or failure of function execution
  */
-std::string SetMessage(beginner_tutorials::ServiceFile::Request &request_, beginner_tutorials::ServiceFile::Response &response_) {
+bool SetMessage(beginner_tutorials::ServiceFile::Request &request_,   // NOLINT
+beginner_tutorials::ServiceFile::Response &response_) {   // NOLINT
   ROS_INFO_STREAM("Modifying message");
   if (request_.input_msg.empty()) {
     ROS_ERROR_STREAM("Received empty string message.");
@@ -48,7 +48,7 @@ std::string SetMessage(beginner_tutorials::ServiceFile::Request &request_, begin
   } else {
     ROS_DEBUG_STREAM("Received message: " << request_.input_msg);
     ROS_WARN_STREAM("Publisher message will be changed.");
-    publisher_message = ros::Time::now() + request_.input_msg;
+    publisher_message = request_.input_msg;
     response_.output_msg = request_.input_msg;
     ROS_DEBUG_STREAM("Talker message changed.");
     return true;
@@ -102,7 +102,8 @@ int main(int argc, char **argv) {
   n.getParam("/frequency", talk_frequency);
   ROS_DEBUG_STREAM("Frequency argument = " << talk_frequency);
   if (isnan(talk_frequency) || talk_frequency < 1) {
-    ROS_FATAL_STREAM("Invalid frequency. Frequency must be a non zero positive number");
+    ROS_FATAL_STREAM(
+      "Invalid frequency. Frequency must be a nonzero positive number");
     ROS_DEBUG_STREAM("Invalid frequency detected. Changed to default value");
     talk_frequency = 10.0;
   } else if (talk_frequency > 51) {
