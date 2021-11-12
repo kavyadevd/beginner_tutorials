@@ -56,6 +56,12 @@ beginner_tutorials::ServiceFile::Response &response_) {   // NOLINT
 }
 
 
+/**
+ * @brief Function to broadcast a tf frame called /talk with parent /world
+ * @return void 
+ */
+void BroadcastTFFrame() {
+}
 
 int main(int argc, char **argv) {
   /**
