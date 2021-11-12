@@ -19,10 +19,38 @@ include_directories(include ${catkin_INCLUDE_DIRS})
 
 add_executable(talker src/talker.cpp)
 target_link_libraries(talker ${catkin_LIBRARIES})
-add_dependencies(talker beginner_tutorials_generate_messages_cpp)
+add_dependencies(talker beginner_tutorials_generate_messages_cpp ${simple_rostest_EXPORTED_TARGETS})
 
 add_executable(listener src/listener.cpp)
 target_link_libraries(listener ${catkin_LIBRARIES})
 add_dependencies(listener beginner_tutorials_generate_messages_cpp)
+
+
+#############
+## Testing ##
+#############
+
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+
+  add_rostest_gtest(
+  TalkerListenerTest
+  test/TalkerListenerTest.launch
+  test/main.cpp
+  test/TalkerListenerTest.cpp
+  )
+  target_link_libraries(
+  TalkerListenerTest
+  ${catkin_LIBRARIES}
+  )
+  add_dependencies(
+  TalkerListenerTest
+  ServiceFile
+  ${PROJECT_NAME}_generate_messages_cpp
+  ${catkin_EXPORTED_TARGETS}
+  )
+endif()
+
+
 
 # %EndTag(FULLTEXT)%
