@@ -66,10 +66,20 @@ $(function() {
 <p>A beginner ROS package that implements simple publisher-subscriber nodes in ROS</p>
 <h2>Installations</h2>
 <p>To install ROS refer <a href="http://wiki.ros.org/ROS/Installation">this link</a>.</p>
-<p>Preferred Ubuntu 18.04, ROS Melodic</p>
+<h2>Requirements / Assumptions</h2>
+<p>Project requires and evironment with Ubuntu 18.04, ROS Melodic</p>
 <p>### Step 1. Clone repository and build the package </p><div class="fragment"><div class="line">git clone --recursive https://github.com/kavyadevd/beginner_tutorials.git</div><div class="line">cp &lt;repository_path&gt; &lt;catkin_workspace_path/src/&gt;</div><div class="line">cd &lt;catkin_workspace&gt;</div><div class="line">source ./devel/setup.bash</div><div class="line">catkin_make</div></div><!-- fragment --><p>### Step 2. Make sure that a roscore is up and running </p><div class="fragment"><div class="line">roscore</div></div><!-- fragment --><p> ### Step 3. In new terminal run publisher node </p><div class="fragment"><div class="line">rosrun beginner_tutorials talker</div></div><!-- fragment --><p> ### Step 4. In new terminal run subscriber node </p><div class="fragment"><div class="line">rosrun beginner_tutorials listener</div></div><!-- fragment --><h4>To run launch file</h4>
 <div class="fragment"><div class="line">roslaunch beginner_tutorials LaunchTalkerListener.launch frequency:=&lt;desired-frequency&gt;</div></div><!-- fragment --><p> This command will launch published and subscriber.</p>
-<p>#### To run service </p><div class="fragment"><div class="line">rosservice call /ServiceFile &quot;&lt;desired-custom-message&gt;&quot;</div></div><!-- fragment --><p>#### To invoke rqt logger and console on separate terminals run the following two commands </p><div class="fragment"><div class="line">rosrun rqt_console rqt_console</div><div class="line">rosrun rqt_logger_level rqt_logger_level</div></div><!-- fragment --><h2>Plugins</h2>
+<p>#### To run service </p><div class="fragment"><div class="line">rosservice call /ServiceFile &quot;&lt;desired-custom-message&gt;&quot;</div></div><!-- fragment --><p>#### To invoke rqt logger and console on separate terminals run the following two commands </p><div class="fragment"><div class="line">rosrun rqt_console rqt_console</div><div class="line">rosrun rqt_logger_level rqt_logger_level</div></div><!-- fragment --><h4>View tf frames and tree</h4>
+<div class="fragment"><div class="line">rosrun tf tf_echo /world /talk</div><div class="line">rosrun rqt_tf_tree rqt_tf_tree</div></div><!-- fragment --><h2>Running ROS test/ Gtest</h2>
+<p>To make the test files execute the following commands successively </p><div class="fragment"><div class="line">catkin_make tests</div><div class="line">catkin_make test</div></div><!-- fragment --><p>Launch the testcases launch by executing the following command </p><div class="fragment"><div class="line">rostest beginner_tutorials TalkerListenerTest.launch frequency:=5</div></div><!-- fragment --><p>Output will be similiar to :</p>
+<div class="fragment"><div class="line">... logging to /home/kavya/.ros/log/rostest-Matrix-27255.log</div><div class="line">[ROSUNIT] Outputting test results to /home/kavya/.ros/test_results/beginner_tutorials/rostest-test_TalkerListenerTest.xml</div><div class="line">[ WARN] [1636828912.923804367]: Publisher message will be changed.</div><div class="line">[Testcase: testTalkerListenerTest] ... ok</div><div class="line"></div><div class="line">[ROSTEST]-----------------------------------------------------------------------</div><div class="line"></div><div class="line">[beginner_tutorials.rosunit-TalkerListenerTest/TestPublisherExists][passed]</div><div class="line">[beginner_tutorials.rosunit-TalkerListenerTest/TestMessageChangeService][passed]</div><div class="line"></div><div class="line">SUMMARY</div><div class="line"> * RESULT: SUCCESS</div><div class="line"> * TESTS: 2</div><div class="line"> * ERRORS: 0</div><div class="line"> * FAILURES: 0</div><div class="line"></div><div class="line">rostest log file is in /home/kavya/.ros/log/rostest-Matrix-27255.log</div></div><!-- fragment --><h2>ROSbag</h2>
+<p>rosbag is a set of tools for recording from and playing back to ROS topics. It is intended to be high performance and avoids deserialization and reserialization of the messages. <a href="http://wiki.ros.org/rosbag">Read more</a></p>
+<p>To record a bagfile run following commands: Terminal 1 </p><div class="fragment"><div class="line">rosrun beginner_tutorials talker</div></div><!-- fragment --><p> Terminal 2 </p><div class="fragment"><div class="line">mkdir ~/bagfiles</div><div class="line">cd ~/bagfiles</div><div class="line">rosbag record -a</div></div><!-- fragment --><p> This will record till you stop it by typing Ctrl+C</p>
+<p>Check recorded bag file info using the command: </p><div class="fragment"><div class="line">rosbag info &lt;bag-file-name&gt;</div></div><!-- fragment --><p>To check the validity of bag file we will start listener node and check if the recorded messages are heard by listener.</p>
+<p>Terminal 1: </p><div class="fragment"><div class="line">rosrun beginner_tutorials listener</div></div><!-- fragment --><p>Terminal 2: </p><div class="fragment"><div class="line">rosbag play &lt;rosbag-file-path&gt;/&lt;rosbag-file&gt;.bag</div></div><!-- fragment --><h2>Note</h2>
+<p>An active operation running on a terminal can be terminated by giving a Ctrl+C input from keyboard at any time.</p>
+<h2>Plugins</h2>
 <ul>
 <li><p class="startli">CppCheckEclipse</p>
 <p class="startli">To install and run cppcheck in Eclipse</p><ol type="1">
@@ -89,10 +99,7 @@ $(function() {
 </ol>
 </li>
 <li><p class="startli">Doxygen</p>
-<p class="startli">The HTML page for project outlines can be generated using the following commands</p><ol type="1">
-<li>doxygen -g</li>
-<li>doxygen Doxyfile</li>
-</ol>
+<p class="startli">The HTML page for project outlines can be generated using the following commands ```bash doxygen -g doxygen Doxyfile ```</p>
 </li>
 </ul>
 <h2>Licensing</h2>

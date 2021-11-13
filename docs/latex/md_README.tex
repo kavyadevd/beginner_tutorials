@@ -6,7 +6,9 @@ A beginner R\+OS package that implements simple publisher-\/subscriber nodes in 
 
 To install R\+OS refer \href{http://wiki.ros.org/ROS/Installation}{\tt this link}.
 
-Preferred Ubuntu 18.\+04, R\+OS Melodic
+\subsection*{Requirements / Assumptions}
+
+Project requires and evironment with Ubuntu 18.\+04, R\+OS Melodic
 
 \#\#\# Step 1. Clone repository and build the package 
 \begin{DoxyCode}
@@ -53,6 +55,95 @@ rosrun rqt\_logger\_level rqt\_logger\_level
 \end{DoxyCode}
 
 
+\paragraph*{View tf frames and tree}
+
+
+\begin{DoxyCode}
+rosrun tf tf\_echo /world /talk
+rosrun rqt\_tf\_tree rqt\_tf\_tree
+\end{DoxyCode}
+
+
+\subsection*{Running R\+OS test/ Gtest}
+
+To make the test files execute the following commands successively 
+\begin{DoxyCode}
+catkin\_make tests
+catkin\_make test
+\end{DoxyCode}
+
+
+Launch the testcases launch by executing the following command 
+\begin{DoxyCode}
+rostest beginner\_tutorials TalkerListenerTest.launch frequency:=5
+\end{DoxyCode}
+
+
+Output will be similiar to \+:
+
+
+\begin{DoxyCode}
+... logging to /home/kavya/.ros/log/rostest-Matrix-27255.log
+[ROSUNIT] Outputting test results to
+       /home/kavya/.ros/test\_results/beginner\_tutorials/rostest-test\_TalkerListenerTest.xml
+[ WARN] [1636828912.923804367]: Publisher message will be changed.
+[Testcase: testTalkerListenerTest] ... ok
+
+[ROSTEST]-----------------------------------------------------------------------
+
+[beginner\_tutorials.rosunit-TalkerListenerTest/TestPublisherExists][passed]
+[beginner\_tutorials.rosunit-TalkerListenerTest/TestMessageChangeService][passed]
+
+SUMMARY
+ * RESULT: SUCCESS
+ * TESTS: 2
+ * ERRORS: 0
+ * FAILURES: 0
+
+rostest log file is in /home/kavya/.ros/log/rostest-Matrix-27255.log
+\end{DoxyCode}
+
+
+\subsection*{R\+O\+Sbag}
+
+rosbag is a set of tools for recording from and playing back to R\+OS topics. It is intended to be high performance and avoids deserialization and reserialization of the messages. \href{http://wiki.ros.org/rosbag}{\tt Read more}
+
+To record a bagfile run following commands\+: Terminal 1 
+\begin{DoxyCode}
+rosrun beginner\_tutorials talker
+\end{DoxyCode}
+ Terminal 2 
+\begin{DoxyCode}
+mkdir ~/bagfiles
+cd ~/bagfiles
+rosbag record -a
+\end{DoxyCode}
+ This will record till you stop it by typing Ctrl+C
+
+Check recorded bag file info using the command\+: 
+\begin{DoxyCode}
+rosbag info <bag-file-name>
+\end{DoxyCode}
+
+
+To check the validity of bag file we will start listener node and check if the recorded messages are heard by listener.
+
+Terminal 1\+: 
+\begin{DoxyCode}
+rosrun beginner\_tutorials listener
+\end{DoxyCode}
+
+
+Terminal 2\+: 
+\begin{DoxyCode}
+rosbag play <rosbag-file-path>/<rosbag-file>.bag
+\end{DoxyCode}
+
+
+\subsection*{Note}
+
+An active operation running on a terminal can be terminated by giving a Ctrl+C input from keyboard at any time.
+
 \subsection*{Plugins}
 
 
@@ -83,11 +174,7 @@ To include and use Google C++ Style formatter in Eclipse
 \end{DoxyEnumerate}
 \item Doxygen
 
-The H\+T\+ML page for project outlines can be generated using the following commands
-\begin{DoxyEnumerate}
-\item doxygen -\/g
-\item doxygen Doxyfile
-\end{DoxyEnumerate}
+The H\+T\+ML page for project outlines can be generated using the following commands ```bash doxygen -\/g doxygen Doxyfile ```
 \end{DoxyItemize}
 
 \subsection*{Licensing}
