@@ -52,6 +52,13 @@ rosrun rqt_console rqt_console
 rosrun rqt_logger_level rqt_logger_level
 ```
 
+#### View tf frames and tree
+
+```bash
+rosrun tf tf_echo /world /talk
+rosrun rqt_tf_tree rqt_tf_tree
+```
+
 ## Running ROS test/ Gtest
 
 To make the test files execute the following commands successively
@@ -87,6 +94,44 @@ SUMMARY
 rostest log file is in /home/kavya/.ros/log/rostest-Matrix-27255.log
 
 ```
+
+## ROSbag
+rosbag is a set of tools for recording from and playing back to ROS topics. It is intended to be high performance and avoids deserialization and reserialization of the messages. [Read more](http://wiki.ros.org/rosbag)
+
+To record a bagfile run following commands:
+Terminal 1
+```bash
+rosrun beginner_tutorials talker
+```
+Terminal 2
+```bash
+mkdir ~/bagfiles
+cd ~/bagfiles
+rosbag record -a
+```
+This will record till you stop it by typing Ctrl+C
+
+Check recorded bag file info using the command:
+```bash
+rosbag info <bag-file-name>
+```
+
+To check the validity of bag file we will start listener node and check if the recorded messages are heard by listener.
+
+Terminal 1:
+```bash
+rosrun beginner_tutorials listener
+```
+
+Terminal 2:
+```bash
+rosbag play <rosbag-file-path>/<rosbag-file>.bag
+```
+
+
+
+## Note
+An active operation running on a terminal can be terminated by giving a Ctrl+C input from keyboard at any time.
 
 ## Plugins
 
