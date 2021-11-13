@@ -128,7 +128,10 @@ Terminal 2:
 rosbag play <rosbag-file-path>/<rosbag-file>.bag
 ```
 
-
+#### To launch nodes with rosbag recording
+```bash
+roslaunch beginner_tutorials LaunchTalkerListener.launch rosbag_flag:=true
+```
 
 ## Note
 An active operation running on a terminal can be terminated by giving a Ctrl+C input from keyboard at any time.
