@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="frequency" default="10" doc="frequency argument"/>
-    <node pkg = "beginner_tutorials" type = "talker" name = "publisher_node" output = "screen" args="$(arg frequency)" />
-    <test pkg="simple_rostest" test-name="TalkerListenerTest" type="TalkerListenerTest" />
+  <node pkg="beginner_tutorials" type="talker" name="talker" />
+  <test pkg="beginner_tutorials" type="TalkerListenerTest" test-name="TalkerListenerTest"/>
 </launch>
