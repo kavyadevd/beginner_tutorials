@@ -148,9 +148,9 @@ An active operation running on a terminal can be terminated by giving a Ctrl+C i
     
     3. To run on terminal
     ```bash
-    cppcheck --enable=all --std=c++11 -I include/ --suppress=missingIncludeSystem $( find . -name *.cpp -or -name *.h | grep -vE -e "^./build/" -e "^./vendor/") >     Results/cppcheckoutput.xml
+    cppcheck --enable=all --std=c++11 -I include/ --suppress=missingIncludeSystem $( find . -name *.cpp -or -name *.h | grep -vE -e "^./build/" -e "^./vendor/") >     Results/cppcheckoutput.txt
     ```
-    Results are present at Results/cppcheckoutput.xml
+    Results are present at Results/cppcheckoutput.txt
     
 - Cpplint
    1. To run cpplint on terminal

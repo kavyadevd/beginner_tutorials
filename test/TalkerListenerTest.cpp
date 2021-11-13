@@ -38,7 +38,8 @@
  */
 TEST(TestStub, TestPublisherExists) {
   ros::NodeHandle nh;
-  ros::ServiceClient client = nh.serviceClient<beginner_tutorials::ServiceFile>("ServiceFile");
+  ros::ServiceClient client =
+    nh.serviceClient<beginner_tutorials::ServiceFile>("ServiceFile");
   bool exists(client.waitForExistence(ros::Duration(5.0)));
   EXPECT_TRUE(exists);
 }
