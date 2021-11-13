@@ -52,6 +52,41 @@ rosrun rqt_console rqt_console
 rosrun rqt_logger_level rqt_logger_level
 ```
 
+## Running ROS test/ Gtest
+
+To make the test files execute the following commands successively
+```bash
+catkin_make tests
+catkin_make test
+```
+
+Launch the testcases launch by executing the following command
+```bash
+rostest beginner_tutorials TalkerListenerTest.launch frequency:=5
+```
+
+Output will be similiar to :
+
+```bash
+... logging to /home/kavya/.ros/log/rostest-Matrix-27255.log
+[ROSUNIT] Outputting test results to /home/kavya/.ros/test_results/beginner_tutorials/rostest-test_TalkerListenerTest.xml
+[ WARN] [1636828912.923804367]: Publisher message will be changed.
+[Testcase: testTalkerListenerTest] ... ok
+
+[ROSTEST]-----------------------------------------------------------------------
+
+[beginner_tutorials.rosunit-TalkerListenerTest/TestPublisherExists][passed]
+[beginner_tutorials.rosunit-TalkerListenerTest/TestMessageChangeService][passed]
+
+SUMMARY
+ * RESULT: SUCCESS
+ * TESTS: 2
+ * ERRORS: 0
+ * FAILURES: 0
+
+rostest log file is in /home/kavya/.ros/log/rostest-Matrix-27255.log
+
+```
 
 ## Plugins
 
